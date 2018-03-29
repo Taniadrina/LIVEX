@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="livexModelStoreContainer" CdmEntityContainer="livexEntities">
+    <EntitySetMapping Name="alumno">
+      <EntityTypeMapping TypeName="livexModel.alumno">
+        <MappingFragment StoreEntitySet="alumno">
+          <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
+          <ScalarProperty Name="Nombre_Alumno" ColumnName="Nombre_Alumno" />
+          <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+          <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+          <ScalarProperty Name="Edad" ColumnName="Edad" />
+          <ScalarProperty Name="Telefono_Casa" ColumnName="Telefono_Casa" />
+          <ScalarProperty Name="Telefono_Celular" ColumnName="Telefono_Celular" />
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+          <ScalarProperty Name="Curso_inicial" ColumnName="Curso_inicial" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="asistencia_alumno">
+      <EntityTypeMapping TypeName="livexModel.asistencia_alumno">
+        <MappingFragment StoreEntitySet="asistencia_alumno">
+          <ScalarProperty Name="AsistenciaID" ColumnName="AsistenciaID" />
+          <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+          <ScalarProperty Name="MaestroID" ColumnName="MaestroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categorias">
+      <EntityTypeMapping TypeName="livexModel.categorias">
+        <MappingFragment StoreEntitySet="categorias">
+          <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+          <ScalarProperty Name="Nombre_Categoria" ColumnName="Nombre_Categoria" />
+          <ScalarProperty Name="Num_Nivel" ColumnName="Num_Nivel" />
+          <ScalarProperty Name="Tipo_Categoria" ColumnName="Tipo_Categoria" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ciclo">
+      <EntityTypeMapping TypeName="livexModel.ciclo">
+        <MappingFragment StoreEntitySet="ciclo">
+          <ScalarProperty Name="CicloID" ColumnName="CicloID" />
+          <ScalarProperty Name="Nombre_ciclo" ColumnName="Nombre_ciclo" />
+          <ScalarProperty Name="Fecha_inicio" ColumnName="Fecha_inicio" />
+          <ScalarProperty Name="Fecha_fin" ColumnName="Fecha_fin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="curso">
+      <EntityTypeMapping TypeName="livexModel.curso">
+        <MappingFragment StoreEntitySet="curso">
+          <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+          <ScalarProperty Name="Nombre_Curso" ColumnName="Nombre_Curso" />
+          <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
+          <ScalarProperty Name="MaestroID" ColumnName="MaestroID" />
+          <ScalarProperty Name="HorarioID" ColumnName="HorarioID" />
+          <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="descuentos">
+      <EntityTypeMapping TypeName="livexModel.descuentos">
+        <MappingFragment StoreEntitySet="descuentos">
+          <ScalarProperty Name="DescuentoID" ColumnName="DescuentoID" />
+          <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="horario">
+      <EntityTypeMapping TypeName="livexModel.horario">
+        <MappingFragment StoreEntitySet="horario">
+          <ScalarProperty Name="HorarioID" ColumnName="HorarioID" />
+          <ScalarProperty Name="Hora_inicio" ColumnName="Hora_inicio" />
+          <ScalarProperty Name="Hora_Fin" ColumnName="Hora_Fin" />
+          <ScalarProperty Name="Dia_Lun" ColumnName="Dia_Lun" />
+          <ScalarProperty Name="Dia_Mar" ColumnName="Dia_Mar" />
+          <ScalarProperty Name="Dia_Mie" ColumnName="Dia_Mie" />
+          <ScalarProperty Name="Dia_Jue" ColumnName="Dia_Jue" />
+          <ScalarProperty Name="Dia_Vie" ColumnName="Dia_Vie" />
+          <ScalarProperty Name="Dia_Sab" ColumnName="Dia_Sab" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="livexModel.usuarios">
+        <MappingFragment StoreEntitySet="usuarios">
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="Nombre_usuario" ColumnName="Nombre_usuario" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="alumno_cursa">
+      <EntityTypeMapping TypeName="livexModel.alumno_cursa">
+        <MappingFragment StoreEntitySet="alumno_cursa">
+          <ScalarProperty Name="AlumnoID" ColumnName="AlumnoID" />
+          <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+          <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="curso_categoria" TypeName="livexModel.curso_categoria" StoreEntitySet="curso_categoria">
+      <EndProperty Name="categorias">
+        <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+      </EndProperty>
+      <EndProperty Name="curso">
+        <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="curso_horario" TypeName="livexModel.curso_horario" StoreEntitySet="curso_horario">
+      <EndProperty Name="curso">
+        <ScalarProperty Name="CursoID" ColumnName="Curso_ID" />
+      </EndProperty>
+      <EndProperty Name="horario">
+        <ScalarProperty Name="HorarioID" ColumnName="Horario_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="language">
+      <EntityTypeMapping TypeName="livexModel.language">
+        <MappingFragment StoreEntitySet="language">
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="languageID" ColumnName="languageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="maestro_skills">
+      <EntityTypeMapping TypeName="livexModel.maestro_skills">
+        <MappingFragment StoreEntitySet="maestro_skills">
+          <ScalarProperty Name="skillID" ColumnName="skillID" />
+          <ScalarProperty Name="maestroID" ColumnName="maestroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="maestro">
+      <EntityTypeMapping TypeName="livexModel.maestro">
+        <MappingFragment StoreEntitySet="maestro">
+          <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+          <ScalarProperty Name="salario_base" ColumnName="salario_base" />
+          <ScalarProperty Name="sexo" ColumnName="sexo" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="maestroID" ColumnName="maestroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="skills">
+      <EntityTypeMapping TypeName="livexModel.skills">
+        <MappingFragment StoreEntitySet="skills">
+          <ScalarProperty Name="skillName" ColumnName="skillName" />
+          <ScalarProperty Name="skillID" ColumnName="skillID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

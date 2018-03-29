@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="livexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="alumno">
+    <Key>
+      <PropertyRef Name="AlumnoID" />
+    </Key>
+    <Property Name="AlumnoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Alumno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Paterno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Materno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Edad" Type="Int32" />
+    <Property Name="Telefono_Casa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono_Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Curso_inicial" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="alumno_cursa" Relationship="Self.AlumnoID" FromRole="alumno" ToRole="alumno_cursa" />
+  </EntityType>
+  <EntityType Name="asistencia_alumno">
+    <Key>
+      <PropertyRef Name="AsistenciaID" />
+    </Key>
+    <Property Name="AsistenciaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AlumnoID" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" />
+    <Property Name="CursoID" Type="Int32" Nullable="false" />
+    <Property Name="MaestroID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="curso" Relationship="Self.Curso_asis_ID" FromRole="asistencia_alumno" ToRole="curso" />
+  </EntityType>
+  <EntityType Name="categorias">
+    <Key>
+      <PropertyRef Name="CategoriaID" />
+    </Key>
+    <Property Name="CategoriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Categoria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Num_Nivel" Type="Int32" />
+    <Property Name="Tipo_Categoria" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Decimal" />
+    <NavigationProperty Name="curso" Relationship="Self.curso_categoria" FromRole="categorias" ToRole="curso" />
+  </EntityType>
+  <EntityType Name="ciclo">
+    <Key>
+      <PropertyRef Name="CicloID" />
+    </Key>
+    <Property Name="CicloID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_ciclo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" />
+    <Property Name="Fecha_fin" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="curso">
+    <Key>
+      <PropertyRef Name="CursoID" />
+    </Key>
+    <Property Name="CursoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Curso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AlumnoID" Type="Int32" Nullable="false" />
+    <Property Name="MaestroID" Type="Int32" Nullable="false" />
+    <Property Name="HorarioID" Type="Int32" Nullable="false" />
+    <Property Name="CategoriaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="asistencia_alumno" Relationship="Self.Curso_asis_ID" FromRole="curso" ToRole="asistencia_alumno" />
+    <NavigationProperty Name="alumno_cursa" Relationship="Self.CursoID" FromRole="curso" ToRole="alumno_cursa" />
+    <NavigationProperty Name="categorias" Relationship="Self.curso_categoria" FromRole="curso" ToRole="categorias" />
+    <NavigationProperty Name="horario" Relationship="Self.curso_horario" FromRole="curso" ToRole="horario" />
+  </EntityType>
+  <EntityType Name="descuentos">
+    <Key>
+      <PropertyRef Name="DescuentoID" />
+    </Key>
+    <Property Name="DescuentoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Porcentaje" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="horario">
+    <Key>
+      <PropertyRef Name="HorarioID" />
+    </Key>
+    <Property Name="HorarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hora_inicio" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Hora_Fin" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Lun" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Mar" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Mie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Jue" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Vie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dia_Sab" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="curso" Relationship="Self.curso_horario" FromRole="horario" ToRole="curso" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="UsuarioID" />
+    </Key>
+    <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="alumno_cursa">
+    <Key>
+      <PropertyRef Name="AlumnoID" />
+      <PropertyRef Name="CursoID" />
+    </Key>
+    <Property Name="AlumnoID" Type="Int32" Nullable="false" />
+    <Property Name="CursoID" Type="Int32" Nullable="false" />
+    <Property Name="Calificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Observaciones" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="alumno" Relationship="Self.AlumnoID" FromRole="alumno_cursa" ToRole="alumno" />
+    <NavigationProperty Name="curso" Relationship="Self.CursoID" FromRole="alumno_cursa" ToRole="curso" />
+  </EntityType>
+  <Association Name="AlumnoID">
+    <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+    <End Role="alumno_cursa" Type="Self.alumno_cursa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="alumno">
+        <PropertyRef Name="AlumnoID" />
+      </Principal>
+      <Dependent Role="alumno_cursa">
+        <PropertyRef Name="AlumnoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Curso_asis_ID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="asistencia_alumno" Type="Self.asistencia_alumno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="asistencia_alumno">
+        <PropertyRef Name="CursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CursoID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="alumno_cursa" Type="Self.alumno_cursa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="alumno_cursa">
+        <PropertyRef Name="CursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="curso_categoria">
+    <End Role="categorias" Type="Self.categorias" Multiplicity="*" />
+    <End Role="curso" Type="Self.curso" Multiplicity="*" />
+  </Association>
+  <Association Name="curso_horario">
+    <End Role="curso" Type="Self.curso" Multiplicity="*" />
+    <End Role="horario" Type="Self.horario" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="livexEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="alumno" EntityType="Self.alumno" />
+    <EntitySet Name="asistencia_alumno" EntityType="Self.asistencia_alumno" />
+    <EntitySet Name="categorias" EntityType="Self.categorias" />
+    <EntitySet Name="ciclo" EntityType="Self.ciclo" />
+    <EntitySet Name="curso" EntityType="Self.curso" />
+    <EntitySet Name="descuentos" EntityType="Self.descuentos" />
+    <EntitySet Name="horario" EntityType="Self.horario" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+    <EntitySet Name="alumno_cursa" EntityType="Self.alumno_cursa" />
+    <AssociationSet Name="AlumnoID" Association="Self.AlumnoID">
+      <End Role="alumno" EntitySet="alumno" />
+      <End Role="alumno_cursa" EntitySet="alumno_cursa" />
+    </AssociationSet>
+    <AssociationSet Name="Curso_asis_ID" Association="Self.Curso_asis_ID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="asistencia_alumno" EntitySet="asistencia_alumno" />
+    </AssociationSet>
+    <AssociationSet Name="CursoID" Association="Self.CursoID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="alumno_cursa" EntitySet="alumno_cursa" />
+    </AssociationSet>
+    <AssociationSet Name="curso_categoria" Association="Self.curso_categoria">
+      <End Role="categorias" EntitySet="categorias" />
+      <End Role="curso" EntitySet="curso" />
+    </AssociationSet>
+    <AssociationSet Name="curso_horario" Association="Self.curso_horario">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="horario" EntitySet="horario" />
+    </AssociationSet>
+    <EntitySet Name="language" EntityType="livexModel.language" />
+    <EntitySet Name="maestro_skills" EntityType="livexModel.maestro_skills" />
+    <EntitySet Name="maestro" EntityType="livexModel.maestro" />
+    <EntitySet Name="skills" EntityType="livexModel.skills" />
+  </EntityContainer>
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="languageID" />
+    </Key>
+    <Property Name="languageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="language_name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="maestro_skills">
+    <Key>
+      <PropertyRef Name="maestroID" />
+      <PropertyRef Name="skillID" />
+    </Key>
+    <Property Name="maestroID" Type="Int32" Nullable="false" />
+    <Property Name="skillID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="maestro">
+    <Key>
+      <PropertyRef Name="maestroID" />
+    </Key>
+    <Property Name="maestroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombres" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="apellidos" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="sexo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="salario_base" Type="Int32" />
+    <Property Name="Idioma" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="skills">
+    <Key>
+      <PropertyRef Name="skillID" />
+    </Key>
+    <Property Name="skillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="skillName" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

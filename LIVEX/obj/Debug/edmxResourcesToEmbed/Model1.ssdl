@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="livexModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="alumno">
+    <Key>
+      <PropertyRef Name="AlumnoID" />
+    </Key>
+    <Property Name="AlumnoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Alumno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellido_Paterno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellido_Materno" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Edad" Type="int" />
+    <Property Name="Telefono_Casa" Type="varchar" MaxLength="15" />
+    <Property Name="Telefono_Celular" Type="varchar" MaxLength="15" />
+    <Property Name="Domicilio" Type="varchar" MaxLength="50" />
+    <Property Name="Curso_inicial" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'def.livex.alumno_cursa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="alumno_cursa">
+    <Key>
+      <PropertyRef Name="AlumnoID" />
+      <PropertyRef Name="CursoID" />
+    </Key>
+    <Property Name="AlumnoID" Type="int" Nullable="false" />
+    <Property Name="CursoID" Type="int" Nullable="false" />
+    <Property Name="Calificacion" Type="varchar" MaxLength="10" />
+    <Property Name="Observaciones" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="asistencia_alumno">
+    <Key>
+      <PropertyRef Name="AsistenciaID" />
+    </Key>
+    <Property Name="AsistenciaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AlumnoID" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="CursoID" Type="int" Nullable="false" />
+    <Property Name="MaestroID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="categorias">
+    <Key>
+      <PropertyRef Name="CategoriaID" />
+    </Key>
+    <Property Name="CategoriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Categoria" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Num_Nivel" Type="int" />
+    <Property Name="Tipo_Categoria" Type="varchar" MaxLength="10" />
+    <Property Name="Precio" Type="decimal" Precision="2" Scale="0" />
+  </EntityType>
+  <EntityType Name="ciclo">
+    <Key>
+      <PropertyRef Name="CicloID" />
+    </Key>
+    <Property Name="CicloID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_ciclo" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="Fecha_inicio" Type="date" Nullable="false" />
+    <Property Name="Fecha_fin" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="curso">
+    <Key>
+      <PropertyRef Name="CursoID" />
+    </Key>
+    <Property Name="CursoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Curso" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AlumnoID" Type="int" Nullable="false" />
+    <Property Name="MaestroID" Type="int" Nullable="false" />
+    <Property Name="HorarioID" Type="int" Nullable="false" />
+    <Property Name="CategoriaID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'def.livex.curso_categoria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="curso_categoria">
+    <Key>
+      <PropertyRef Name="CursoID" />
+      <PropertyRef Name="CategoriaID" />
+    </Key>
+    <Property Name="CursoID" Type="int" Nullable="false" />
+    <Property Name="CategoriaID" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'def.livex.curso_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="curso_horario">
+    <Key>
+      <PropertyRef Name="Curso_ID" />
+      <PropertyRef Name="Horario_ID" />
+    </Key>
+    <Property Name="Curso_ID" Type="int" Nullable="false" />
+    <Property Name="Horario_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="descuentos">
+    <Key>
+      <PropertyRef Name="DescuentoID" />
+    </Key>
+    <Property Name="DescuentoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Porcentaje" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="horario">
+    <Key>
+      <PropertyRef Name="HorarioID" />
+    </Key>
+    <Property Name="HorarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hora_inicio" Type="varchar" MaxLength="45" />
+    <Property Name="Hora_Fin" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Lun" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Mar" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Mie" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Jue" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Vie" Type="varchar" MaxLength="45" />
+    <Property Name="Dia_Sab" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="languageID" />
+    </Key>
+    <Property Name="languageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="language_name" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="maestro">
+    <Key>
+      <PropertyRef Name="maestroID" />
+    </Key>
+    <Property Name="maestroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="apellidos" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="sexo" Type="varchar" MaxLength="1" />
+    <Property Name="salario_base" Type="int" />
+    <Property Name="Idioma" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'def.livex.maestro_skills' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="maestro_skills">
+    <Key>
+      <PropertyRef Name="maestroID" />
+      <PropertyRef Name="skillID" />
+    </Key>
+    <Property Name="maestroID" Type="int" Nullable="false" />
+    <Property Name="skillID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="skills">
+    <Key>
+      <PropertyRef Name="skillID" />
+    </Key>
+    <Property Name="skillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="skillName" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="UsuarioID" />
+    </Key>
+    <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_usuario" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="AlumnoID">
+    <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+    <End Role="alumno_cursa" Type="Self.alumno_cursa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="alumno">
+        <PropertyRef Name="AlumnoID" />
+      </Principal>
+      <Dependent Role="alumno_cursa">
+        <PropertyRef Name="AlumnoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Categoria_ID">
+    <End Role="categorias" Type="Self.categorias" Multiplicity="1" />
+    <End Role="curso_categoria" Type="Self.curso_categoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categorias">
+        <PropertyRef Name="CategoriaID" />
+      </Principal>
+      <Dependent Role="curso_categoria">
+        <PropertyRef Name="CategoriaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Curso_asis_ID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="asistencia_alumno" Type="Self.asistencia_alumno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="asistencia_alumno">
+        <PropertyRef Name="CursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Curso_hr_ID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="curso_horario" Type="Self.curso_horario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="curso_horario">
+        <PropertyRef Name="Curso_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Curso_ID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="curso_categoria" Type="Self.curso_categoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="curso_categoria">
+        <PropertyRef Name="CursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CursoID">
+    <End Role="curso" Type="Self.curso" Multiplicity="1" />
+    <End Role="alumno_cursa" Type="Self.alumno_cursa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="CursoID" />
+      </Principal>
+      <Dependent Role="alumno_cursa">
+        <PropertyRef Name="CursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Horario_hr_ID">
+    <End Role="horario" Type="Self.horario" Multiplicity="1" />
+    <End Role="curso_horario" Type="Self.curso_horario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="horario">
+        <PropertyRef Name="HorarioID" />
+      </Principal>
+      <Dependent Role="curso_horario">
+        <PropertyRef Name="Horario_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="maestro_skills_ibfk_1">
+    <End Role="maestro" Type="Self.maestro" Multiplicity="1" />
+    <End Role="maestro_skills" Type="Self.maestro_skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="maestro">
+        <PropertyRef Name="maestroID" />
+      </Principal>
+      <Dependent Role="maestro_skills">
+        <PropertyRef Name="maestroID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="maestro_skills_ibfk_2">
+    <End Role="skills" Type="Self.skills" Multiplicity="1" />
+    <End Role="maestro_skills" Type="Self.maestro_skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="skills">
+        <PropertyRef Name="skillID" />
+      </Principal>
+      <Dependent Role="maestro_skills">
+        <PropertyRef Name="skillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="livexModelStoreContainer">
+    <EntitySet Name="alumno" EntityType="Self.alumno" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="asistencia_alumno" EntityType="Self.asistencia_alumno" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="categorias" EntityType="Self.categorias" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="ciclo" EntityType="Self.ciclo" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="curso" EntityType="Self.curso" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="descuentos" EntityType="Self.descuentos" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="horario" EntityType="Self.horario" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="language" EntityType="Self.language" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="maestro" EntityType="Self.maestro" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="skills" EntityType="Self.skills" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="livex" store:Type="Tables" />
+    <EntitySet Name="alumno_cursa" EntityType="Self.alumno_cursa" store:Type="Tables" store:Schema="livex">
+      <DefiningQuery>SELECT
+`alumno_cursa`.`AlumnoID`, 
+`alumno_cursa`.`CursoID`, 
+`alumno_cursa`.`Calificacion`, 
+`alumno_cursa`.`Observaciones`
+FROM `alumno_cursa` AS `alumno_cursa`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="curso_categoria" EntityType="Self.curso_categoria" store:Type="Tables" store:Schema="livex">
+      <DefiningQuery>SELECT
+`curso_categoria`.`CursoID`, 
+`curso_categoria`.`CategoriaID`
+FROM `curso_categoria` AS `curso_categoria`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="curso_horario" EntityType="Self.curso_horario" store:Type="Tables" store:Schema="livex">
+      <DefiningQuery>SELECT
+`curso_horario`.`Curso_ID`, 
+`curso_horario`.`Horario_ID`
+FROM `curso_horario` AS `curso_horario`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="maestro_skills" EntityType="Self.maestro_skills" store:Type="Tables" store:Schema="livex">
+      <DefiningQuery>SELECT
+`maestro_skills`.`maestroID`, 
+`maestro_skills`.`skillID`
+FROM `maestro_skills` AS `maestro_skills`</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="AlumnoID" Association="Self.AlumnoID">
+      <End Role="alumno" EntitySet="alumno" />
+      <End Role="alumno_cursa" EntitySet="alumno_cursa" />
+    </AssociationSet>
+    <AssociationSet Name="Categoria_ID" Association="Self.Categoria_ID">
+      <End Role="categorias" EntitySet="categorias" />
+      <End Role="curso_categoria" EntitySet="curso_categoria" />
+    </AssociationSet>
+    <AssociationSet Name="Curso_asis_ID" Association="Self.Curso_asis_ID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="asistencia_alumno" EntitySet="asistencia_alumno" />
+    </AssociationSet>
+    <AssociationSet Name="Curso_hr_ID" Association="Self.Curso_hr_ID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="curso_horario" EntitySet="curso_horario" />
+    </AssociationSet>
+    <AssociationSet Name="Curso_ID" Association="Self.Curso_ID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="curso_categoria" EntitySet="curso_categoria" />
+    </AssociationSet>
+    <AssociationSet Name="CursoID" Association="Self.CursoID">
+      <End Role="curso" EntitySet="curso" />
+      <End Role="alumno_cursa" EntitySet="alumno_cursa" />
+    </AssociationSet>
+    <AssociationSet Name="Horario_hr_ID" Association="Self.Horario_hr_ID">
+      <End Role="horario" EntitySet="horario" />
+      <End Role="curso_horario" EntitySet="curso_horario" />
+    </AssociationSet>
+    <AssociationSet Name="maestro_skills_ibfk_1" Association="Self.maestro_skills_ibfk_1">
+      <End Role="maestro" EntitySet="maestro" />
+      <End Role="maestro_skills" EntitySet="maestro_skills" />
+    </AssociationSet>
+    <AssociationSet Name="maestro_skills_ibfk_2" Association="Self.maestro_skills_ibfk_2">
+      <End Role="skills" EntitySet="skills" />
+      <End Role="maestro_skills" EntitySet="maestro_skills" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

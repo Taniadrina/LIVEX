@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="livexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="language">
+    <Key>
+      <PropertyRef Name="idlanguage" />
+    </Key>
+    <Property Name="idlanguage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="language_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="skills">
+    <Key>
+      <PropertyRef Name="idskills" />
+    </Key>
+    <Property Name="idskills" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="skills_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="teacher_skills">
+    <Key>
+      <PropertyRef Name="idteacher_skills" />
+    </Key>
+    <Property Name="idteacher_skills" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="teacherID" Type="Int32" Nullable="false" />
+    <Property Name="skillID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="teacher" Relationship="livexModel.fk_teacherID" FromRole="teacher_skills" ToRole="teacher" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="iduser" />
+    </Key>
+    <Property Name="iduser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="user_password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="livexEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="language" EntityType="Self.language" />
+    <EntitySet Name="skills" EntityType="Self.skills" />
+    <EntitySet Name="teacher_skills" EntityType="Self.teacher_skills" />
+    <EntitySet Name="user" EntityType="Self.user" />
+    <EntitySet Name="categoria" EntityType="livexModel.categoria" />
+    <EntitySet Name="grupo_categoria" EntityType="livexModel.grupo_categoria" />
+    <AssociationSet Name="fk_categoriaID" Association="livexModel.fk_categoriaID">
+      <End Role="categoria" EntitySet="categoria" />
+      <End Role="grupo_categoria" EntitySet="grupo_categoria" />
+    </AssociationSet>
+    <EntitySet Name="ciclo" EntityType="livexModel.ciclo" />
+    <EntitySet Name="grupo" EntityType="livexModel.grupo" />
+    <AssociationSet Name="fk_cicloID" Association="livexModel.fk_cicloID">
+      <End Role="ciclo" EntitySet="ciclo" />
+      <End Role="grupo" EntitySet="grupo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_grupocategoria_ID" Association="livexModel.fk_grupocategoria_ID">
+      <End Role="grupo_categoria" EntitySet="grupo_categoria" />
+      <End Role="grupo" EntitySet="grupo" />
+    </AssociationSet>
+    <EntitySet Name="alumno_factura" EntityType="livexModel.alumno_factura" />
+    <EntitySet Name="alumno" EntityType="livexModel.alumno" />
+    <AssociationSet Name="fk_facturacion_id" Association="livexModel.fk_facturacion_id">
+      <End Role="alumno_factura" EntitySet="alumno_factura" />
+      <End Role="alumno" EntitySet="alumno" />
+    </AssociationSet>
+    <AssociationSet Name="fk_grupo_id" Association="livexModel.fk_grupo_id">
+      <End Role="grupo" EntitySet="grupo" />
+      <End Role="alumno" EntitySet="alumno" />
+    </AssociationSet>
+    <EntitySet Name="teacher" EntityType="livexModel.teacher" />
+    <AssociationSet Name="fk_maestroID" Association="livexModel.fk_maestroID">
+      <End Role="teacher" EntitySet="teacher" />
+      <End Role="grupo" EntitySet="grupo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_teacherID" Association="livexModel.fk_teacherID">
+      <End Role="teacher" EntitySet="teacher" />
+      <End Role="teacher_skills" EntitySet="teacher_skills" />
+    </AssociationSet>
+    <EntitySet Name="asistencia_maestros" EntityType="livexModel.asistencia_maestros" />
+  </EntityContainer>
+  <EntityType Name="categoria">
+    <Key>
+      <PropertyRef Name="idcategoria" />
+    </Key>
+    <Property Name="idcategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="categoria_nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="precio" Type="Decimal" />
+    <Property Name="tipo_periodo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="clasificacion" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="grupo_categoria" Relationship="livexModel.fk_categoriaID" FromRole="categoria" ToRole="grupo_categoria" />
+  </EntityType>
+  <EntityType Name="grupo_categoria">
+    <Key>
+      <PropertyRef Name="idgrupo_categoria" />
+    </Key>
+    <Property Name="idgrupo_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="grupo_ID" Type="Int32" Nullable="false" />
+    <Property Name="categoria_ID" Type="Int32" Nullable="false" />
+    <Property Name="nivel" Type="Int32" Nullable="false" />
+    <Property Name="tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="categoria" Relationship="livexModel.fk_categoriaID" FromRole="grupo_categoria" ToRole="categoria" />
+    <NavigationProperty Name="grupo" Relationship="livexModel.fk_grupocategoria_ID" FromRole="grupo_categoria" ToRole="grupo" />
+  </EntityType>
+  <Association Name="fk_categoriaID">
+    <End Type="livexModel.categoria" Role="categoria" Multiplicity="1" />
+    <End Type="livexModel.grupo_categoria" Role="grupo_categoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoria">
+        <PropertyRef Name="idcategoria" />
+      </Principal>
+      <Dependent Role="grupo_categoria">
+        <PropertyRef Name="categoria_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ciclo">
+    <Key>
+      <PropertyRef Name="idciclo" />
+    </Key>
+    <Property Name="idciclo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fecha_inicio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_fin" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ciclo_num" Type="Int32" Nullable="false" />
+    <Property Name="ciclo_side" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ciclocol" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="year" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="grupo" Relationship="livexModel.fk_cicloID" FromRole="ciclo" ToRole="grupo" />
+  </EntityType>
+  <EntityType Name="grupo">
+    <Key>
+      <PropertyRef Name="idgrupo" />
+    </Key>
+    <Property Name="idgrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_nivel" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Horario_inicio" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Horario_fin" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Dias" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="MaestroID" Type="Int32" Nullable="false" />
+    <Property Name="Idioma" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="CategoriaID" Type="Int32" />
+    <Property Name="CicloID" Type="Int32" />
+    <Property Name="numero_alumnos" Type="Int32" Nullable="false" />
+    <Property Name="year" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ciclo" Relationship="livexModel.fk_cicloID" FromRole="grupo" ToRole="ciclo" />
+    <NavigationProperty Name="grupo_categoria" Relationship="livexModel.fk_grupocategoria_ID" FromRole="grupo" ToRole="grupo_categoria" />
+    <NavigationProperty Name="alumno" Relationship="livexModel.fk_grupo_id" FromRole="grupo" ToRole="alumno" />
+    <NavigationProperty Name="teacher" Relationship="livexModel.fk_maestroID" FromRole="grupo" ToRole="teacher" />
+  </EntityType>
+  <Association Name="fk_cicloID">
+    <End Type="livexModel.ciclo" Role="ciclo" Multiplicity="0..1" />
+    <End Type="livexModel.grupo" Role="grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ciclo">
+        <PropertyRef Name="idciclo" />
+      </Principal>
+      <Dependent Role="grupo">
+        <PropertyRef Name="CicloID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_grupocategoria_ID">
+    <End Type="livexModel.grupo_categoria" Role="grupo_categoria" Multiplicity="0..1" />
+    <End Type="livexModel.grupo" Role="grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grupo_categoria">
+        <PropertyRef Name="idgrupo_categoria" />
+      </Principal>
+      <Dependent Role="grupo">
+        <PropertyRef Name="CategoriaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="alumno_factura">
+    <Key>
+      <PropertyRef Name="idalumno_factura" />
+    </Key>
+    <Property Name="idalumno_factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="rfc" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="estado" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="ciudad" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="direccion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="direccion_no" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="colonia" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="cp" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="alumno" Relationship="livexModel.fk_facturacion_id" FromRole="alumno_factura" ToRole="alumno" />
+  </EntityType>
+  <EntityType Name="alumno">
+    <Key>
+      <PropertyRef Name="idalumno" />
+    </Key>
+    <Property Name="idalumno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="alumno_nombre" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="alumno_apellido_p" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="alumno_apellido_m" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_nac" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="telefono_casa" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="telefono_celular" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_calle" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_no" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_col" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_mun" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_cp" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="domicilio_edo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="curso_inicial" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="grupo_id" Type="Int32" />
+    <Property Name="categoria_id" Type="Int32" />
+    <Property Name="facturacion_id" Type="Int32" />
+    <Property Name="picture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="alumno_factura" Relationship="livexModel.fk_facturacion_id" FromRole="alumno" ToRole="alumno_factura" />
+    <NavigationProperty Name="grupo" Relationship="livexModel.fk_grupo_id" FromRole="alumno" ToRole="grupo" />
+  </EntityType>
+  <Association Name="fk_facturacion_id">
+    <End Type="livexModel.alumno_factura" Role="alumno_factura" Multiplicity="0..1" />
+    <End Type="livexModel.alumno" Role="alumno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="alumno_factura">
+        <PropertyRef Name="idalumno_factura" />
+      </Principal>
+      <Dependent Role="alumno">
+        <PropertyRef Name="facturacion_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_grupo_id">
+    <End Type="livexModel.grupo" Role="grupo" Multiplicity="0..1" />
+    <End Type="livexModel.alumno" Role="alumno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grupo">
+        <PropertyRef Name="idgrupo" />
+      </Principal>
+      <Dependent Role="alumno">
+        <PropertyRef Name="grupo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="teacher">
+    <Key>
+      <PropertyRef Name="idteacher" />
+    </Key>
+    <Property Name="idteacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="teacher_names" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="teacher_lastname" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="teacher_gender" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="salary_base" Type="Int32" Nullable="false" />
+    <Property Name="language" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="start_date" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Name="RFC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CURP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="street_address" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="neighborhood" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="zip_code" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="sub_state" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="celphone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="birthday" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="emergency_contact_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="emergency_contact_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="picture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="uid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="grupo" Relationship="livexModel.fk_maestroID" FromRole="teacher" ToRole="grupo" />
+    <NavigationProperty Name="teacher_skills" Relationship="livexModel.fk_teacherID" FromRole="teacher" ToRole="teacher_skills" />
+  </EntityType>
+  <Association Name="fk_maestroID">
+    <End Type="livexModel.teacher" Role="teacher" Multiplicity="1" />
+    <End Type="livexModel.grupo" Role="grupo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="teacher">
+        <PropertyRef Name="idteacher" />
+      </Principal>
+      <Dependent Role="grupo">
+        <PropertyRef Name="MaestroID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_teacherID">
+    <End Type="livexModel.teacher" Role="teacher" Multiplicity="1" />
+    <End Type="livexModel.teacher_skills" Role="teacher_skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="teacher">
+        <PropertyRef Name="idteacher" />
+      </Principal>
+      <Dependent Role="teacher_skills">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="asistencia_maestros">
+    <Key>
+      <PropertyRef Name="asistencia_maestrosID" />
+    </Key>
+    <Property Name="No" Type="Int32" />
+    <Property Name="DN" Type="Int32" />
+    <Property Name="UID" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Action" Type="Int32" />
+    <Property Name="APB" Type="Int32" />
+    <Property Name="JobCode" Type="Int32" />
+    <Property Name="date" Type="DateTime" />
+    <Property Name="asistencia_maestrosID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="filename" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="hour" Type="Int32" />
+    <Property Name="min" Type="Int32" />
+    <Property Name="sec" Type="Int32" />
+  </EntityType>
+</Schema>
